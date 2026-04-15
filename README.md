@@ -33,12 +33,12 @@ cd ubacm-agents-workshop
 > **Requires Python 3.9 or newer.** Check your version with `python --version`.
 
 ```bash
+python3 -m venv venv
+
 # macOS / Linux
-python3.9 -m venv venv
 source venv/bin/activate
 
 # Windows
-py -3.9 -m venv venv
 venv\Scripts\activate
 
 pip install -r requirements.txt

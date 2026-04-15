@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 PROXY_URL = os.getenv("PROXY_URL")
-MODEL = "claude-3-5-haiku-20241022"
+MODEL = "claude-haiku-4-5-20251001"
 
 
 def call_llm(messages: list[dict], tools: list[dict] = None, system: str = None) -> dict:
@@ -33,4 +33,8 @@ def call_llm(messages: list[dict], tools: list[dict] = None, system: str = None)
 
     response = requests.post(PROXY_URL, json=payload, timeout=30)
     response.raise_for_status()
-    return response.json()
+    data = response.json()
+    # n8n's "Respond to Webhook" node wraps the response in a list — unwrap it.
+    if isinstance(data, list):
+        data = data[0]
+    return data
