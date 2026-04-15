@@ -12,7 +12,7 @@ plain function calls, and the Anthropic Claude API.
 You (CLI Input)
   └─▶ Master Agent                  -->  decides what to do
         ├─▶ get_current_time()      -->  plain tool (returns the current time)
-        └─▶ gmail_workflow          --> subworkflow for email related tasks
+        └─▶ gmail_workflow          -->  subworkflow for email related tasks
               └─▶ Gmail Agent
                     ├─▶ get_unread_emails()   mock tool
                     └─▶ summarize_emails()    mock tool
