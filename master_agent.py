@@ -48,9 +48,15 @@ MASTER_TOOLS = [
 
 # Maps tool names to their implementations.
 # gmail_workflow is a full sub-agent; get_current_time is a plain function.
+def call_gmail_workflow(inputs):
+    return gmail_workflow(inputs["task"])
+
+def call_get_current_time(inputs):
+    return get_current_time()
+
 WORKFLOW_MAP = {
-    "gmail_workflow": lambda inputs: gmail_workflow(inputs["task"]),
-    "get_current_time": lambda inputs: get_current_time(),
+    "gmail_workflow": call_gmail_workflow,
+    "get_current_time": call_get_current_time,
 }
 
 

@@ -41,9 +41,15 @@ GMAIL_TOOLS = [
 ]
 
 # Maps tool names to their actual Python functions.
+def call_get_unread_emails(inputs):
+    return get_unread_emails()
+
+def call_summarize_emails(inputs):
+    return summarize_emails(inputs["emails"])
+
 TOOL_MAP = {
-    "get_unread_emails": lambda inputs: get_unread_emails(),
-    "summarize_emails": lambda inputs: summarize_emails(inputs["emails"]),
+    "get_unread_emails": call_get_unread_emails,
+    "summarize_emails": call_summarize_emails,
 }
 
 
