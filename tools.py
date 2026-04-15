@@ -1,7 +1,17 @@
 # tools.py
-# Mock tool implementations for the Gmail Agent.
-# In a real system these would call actual APIs — here they return hardcoded data
+# Tool implementations used by the agents.
+# In a real system these would call actual APIs — here most return hardcoded data
 # so the workshop can run without any external service credentials.
+
+import datetime
+
+
+def get_current_time() -> str:
+    """Return the current local date and time as a formatted string."""
+    print("[Tool] get_current_time() called")
+    now = datetime.datetime.now()
+    return now.strftime("%A, %B %d, %Y at %I:%M %p")
+
 
 
 def get_unread_emails() -> list[dict]:

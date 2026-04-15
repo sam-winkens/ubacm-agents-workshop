@@ -5,16 +5,18 @@
 import json
 from llm import call_llm
 from gmail_workflow import gmail_workflow
+from tools import get_current_time
 
 SYSTEM_PROMPT = (
     "You are a helpful personal assistant. "
     "You have access to tools that let you delegate tasks to specialized agents. "
     "Use the gmail_workflow tool for anything related to email. "
+    "Use the get_current_time tool when the user asks about the current time or date. "
     "For everything else, respond directly."
 )
 
-# The Master Agent's only tool is the Gmail subworkflow.
-# Adding new capabilities = adding a new entry here and a new workflow function.
+# The Master Agent's tools — a mix of simple tools and agent subworkflows.
+# Adding new capabilities = adding a new entry here and a mapping in WORKFLOW_MAP.
 MASTER_TOOLS = [
     {
         "name": "gmail_workflow",
@@ -33,11 +35,22 @@ MASTER_TOOLS = [
             "required": ["task"],
         },
     },
+    {
+        "name": "get_current_time",
+        "description": "Returns the current local date and time.",
+        "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+        },
+    },
 ]
 
-# Maps tool names to their subworkflow functions.
+# Maps tool names to their implementations.
+# gmail_workflow is a full sub-agent; get_current_time is a plain function.
 WORKFLOW_MAP = {
     "gmail_workflow": lambda inputs: gmail_workflow(inputs["task"]),
+    "get_current_time": lambda inputs: get_current_time(),
 }
 
 

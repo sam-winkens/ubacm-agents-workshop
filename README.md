@@ -9,13 +9,20 @@ plain function calls, and the Anthropic Claude API.
 ## How It Works
 
 ```
-You (CLI)
-  └─▶ Master Agent          decides what to do
-        └─▶ gmail_workflow  subworkflow for email tasks
+You (CLI Input)
+  └─▶ Master Agent                  -->  decides what to do
+        ├─▶ get_current_time()      -->  plain tool (returns the current time)
+        └─▶ gmail_workflow          --> subworkflow for email related tasks
               └─▶ Gmail Agent
                     ├─▶ get_unread_emails()   mock tool
                     └─▶ summarize_emails()    mock tool
 ```
+
+The Master Agent's tools come in two flavors:
+- **Plain tools** like `get_current_time` — a simple Python function, no LLM involved.
+- **Agent tools** like `gmail_workflow` — spins up a full sub-agent with its own LLM loop and tools.
+
+From the Master Agent's perspective, both look identical: call a tool, get a string back.
 
 ---
 
@@ -61,7 +68,9 @@ python main.py
 
 Type a message at the `You:` prompt. Press **Ctrl+C** to quit.
 
-**Try:** `Summarize my unread emails`
+**Try:**
+- `What is the current time?` — uses the plain `get_current_time` tool
+- `Summarize my unread emails` — delegates to the Gmail sub-agent
 
 ---
 
@@ -72,14 +81,14 @@ Type a message at the `You:` prompt. Press **Ctrl+C** to quit.
 | `main.py` | CLI loop — reads input, prints output |
 | `master_agent.py` | Master Agent: routes to subworkflows or replies directly |
 | `gmail_workflow.py` | Gmail Agent: fetches and summarizes emails |
-| `tools.py` | Mock tools: returns hardcoded email data |
+| `tools.py` | Tools: `get_current_time()` and mock email data |
 | `llm.py` | `call_llm()` — the only file that touches the network |
 
 ---
 
 ## Workshop Challenge
 
-Add a **Calendar workflow** as a second tool for the Master Agent:
+Add a **Calendar workflow** as a third tool for the Master Agent:
 
 1. Add mock tools to `tools.py` (e.g. `get_upcoming_events()`)
 2. Create `calendar_workflow.py` following the same pattern as `gmail_workflow.py`
