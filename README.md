@@ -48,11 +48,8 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Open `.env` and paste in the `PROXY_URL` your instructor shares at the start of the workshop:
+Open `.env` and paste in the `PROXY_URL` your instructor shares at the start of the workshop.
 
-```
-PROXY_URL=https://radial25.app.n8n.cloud/webhook/c79456c6-15f2-4803-9309-7766f4a0ba54
-```
 
 ### 4. Run it
 
