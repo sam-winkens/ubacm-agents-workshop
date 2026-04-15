@@ -24,8 +24,8 @@ You (CLI)
 ### 1. Clone / download the template
 
 ```bash
-git clone <repo-url>
-cd ubacm_agents
+git clone https://github.com/sam-winkens/ubacm-agents-workshop.git
+cd ubacm-agents-workshop
 ```
 
 ### 2. Create a virtual environment and install dependencies
@@ -51,7 +51,7 @@ cp .env.example .env
 Open `.env` and paste in the `PROXY_URL` your instructor shares at the start of the workshop:
 
 ```
-PROXY_URL=https://your-n8n-webhook-url-here
+PROXY_URL=https://radial25.app.n8n.cloud/webhook/c79456c6-15f2-4803-9309-7766f4a0ba54
 ```
 
 ### 4. Run it
@@ -87,18 +87,3 @@ Add a **Calendar workflow** as a second tool for the Master Agent:
 3. Register it in `master_agent.py` under `MASTER_TOOLS` and `WORKFLOW_MAP`
 
 Test with: `What's on my calendar this week?`
-
----
-
-## Instructor: n8n Proxy Setup
-
-Before the event, set up a 3-node n8n workflow so students don't need their own API keys:
-
-1. **Webhook node** — Method: POST, "Respond Using Respond to Webhook Node"
-2. **HTTP Request node** — POST to `https://api.anthropic.com/v1/messages`
-   - Header: `anthropic-version: 2023-06-01`
-   - Header: `x-api-key` → use an n8n Anthropic credential
-   - Body: pass through `{{ $json.body }}` from the webhook
-3. **Respond to Webhook node** — Response Body: `{{ $json }}`
-
-Share the webhook's **Production URL** with students as their `PROXY_URL`.
