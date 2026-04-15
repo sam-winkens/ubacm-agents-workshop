@@ -30,13 +30,15 @@ cd ubacm-agents-workshop
 
 ### 2. Create a virtual environment and install dependencies
 
-```bash
-python -m venv venv
+> **Requires Python 3.9 or newer.** Check your version with `python --version`.
 
+```bash
 # macOS / Linux
+python3.9 -m venv venv
 source venv/bin/activate
 
 # Windows
+py -3.9 -m venv venv
 venv\Scripts\activate
 
 pip install -r requirements.txt
