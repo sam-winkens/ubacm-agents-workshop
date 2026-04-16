@@ -62,21 +62,24 @@ Open `.env` and paste in the `PROXY_URL` your instructor shares at the start of 
 
 This step is required to get real email data in the workshop.
 
-> **Stuck?** Don't worry — if `credentials.json` is missing or something goes wrong, the app automatically falls back to sample emails so you can still follow along :D
+> **Stuck?** Don't worry — if `credentials.json` is missing or something goes wrong with Google OAuth, the app automatically falls back to sample emails so you can still follow along :D
 
 #### 4a. Create a Google Cloud project & enable Gmail
 
-1. Go to <https://console.cloud.google.com/> and sign in with the Google account whose Gmail you want to read.
+1. Go to <https://console.cloud.google.com/> and sign in with the Google account whose Gmail you want to read(if you aren't already signed in).
 2. Click the project dropdown at the top → **New project** → give it any name → **Create**.
-3. In the left sidebar choose **APIs & Services → Library**.
-4. Search for **Gmail API** → click it → **Enable**.
+3. Switch over to your newly created Project.
+4. In the left sidebar choose **APIs & Services → Library**.
+5. Search for **Gmail API** → click it → **Enable**.
 
 #### 4b. Create OAuth 2.0 credentials
 
 1. Go to **APIs & Services → Credentials** → **+ Create Credentials → OAuth client ID**.
-2. If prompted to configure the consent screen, choose **External**, fill in an app name (anything), add your own email as a test user, and save.
-3. Back on the credentials screen, for **Application type** choose **Desktop app** → **Create**.
-4. Click **Download JSON** on the confirmation dialog (or the download icon next to your new credential). Rename the file to `credentials.json` and place it in the root of this project.
+2. If prompted to configure the consent screen, click **Configure consent screen → Get started**.
+3. Fill in an app name (anything) and select your email for user support email, choose **External** for audience, enter your email for contact information, then agree to terms of service, and hit **Create**.
+4. Back on the OAuth Overview screen, click **Create OAuth client**, for **Application type** choose **Desktop app** → **Create**.
+5. CLICK **Download JSON** on the confirmation dialog. Rename the file to `credentials.json`.
+6. PLACE THE `credentials.json` FILE INTO THE ROOT OF YOUR PROJECT!
 
 > `credentials.json` is listed in `.gitignore` — it will **not** be committed.
 
@@ -88,7 +91,8 @@ The first time you run `python main.py` and ask about emails, a browser tab will
 
 #### 4d. If you see a "Google hasn't verified this app" warning
 
-Click **Advanced → Go to \<your app name\> (unsafe)**. This is expected for apps in development/test mode — you are the only test user.
+1. Go back to your Google Cloud project, then navigate to **Audience** tab, then click **Add users** under **Test users** section and type in YOUR email that you used to create the project, then click **Save**.
+2. Now run the `Summarize my unread emails` command in your app to open the pop up tab again select your Gmail Account then click continue then continue. Now you can run email related commands as you have successfully completed Google OAuth. 
 
 ---
 
