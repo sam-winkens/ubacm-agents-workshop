@@ -83,15 +83,3 @@ Type a message at the `You:` prompt. Press **Ctrl+C** to quit.
 | `gmail_workflow.py` | Gmail Agent: fetches and summarizes emails |
 | `tools.py` | Tools: `get_current_time()` and mock email data |
 | `llm.py` | `call_llm()` — the only file that touches the network |
-
----
-
-## Workshop Challenge
-
-Add a **Calendar workflow** as a third tool for the Master Agent:
-
-1. Add mock tools to `tools.py` (e.g. `get_upcoming_events()`)
-2. Create `calendar_workflow.py` following the same pattern as `gmail_workflow.py`
-3. Register it in `master_agent.py` under `MASTER_TOOLS` and `WORKFLOW_MAP`
-
-Test with: `What's on my calendar this week?`
