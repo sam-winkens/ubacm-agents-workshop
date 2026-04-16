@@ -34,7 +34,7 @@ def call_llm(messages: list[dict], tools: list[dict] = None, system: str = None)
     response = requests.post(PROXY_URL, json=payload, timeout=30)
     response.raise_for_status()
     data = response.json()
-    # n8n's "Respond to Webhook" node wraps the response in a list — unwrap it.
+    # n8n's "Respond to Webhook" node wraps the response in a list so we need to unwrap it.
     if isinstance(data, list):
         data = data[0]
     return data

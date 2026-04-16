@@ -14,8 +14,8 @@ You (CLI Input)
         ├─▶ get_current_time()      -->  plain tool (returns the current time)
         └─▶ gmail_workflow          -->  subworkflow for email related tasks
               └─▶ Gmail Agent
-                    ├─▶ get_unread_emails()   mock tool
-                    └─▶ summarize_emails()    mock tool
+                    ├─▶ get_unread_emails()   fetches your real inbox via Gmail API
+                    └─▶ summarize_emails()    formats emails for the LLM
 ```
 
 The Master Agent's tools come in two flavors:
@@ -59,8 +59,41 @@ cp .env.example .env
 
 Open `.env` and paste in the `PROXY_URL` your instructor shares at the start of the workshop.
 
+### 4. Connect your Gmail account
 
-### 4. Run it
+This step is required to get real email data in the workshop.
+
+> **Stuck?** Don't worry — if `credentials.json` is missing or something goes wrong, the app automatically falls back to sample emails so you can still follow along :D
+
+#### 4a. Create a Google Cloud project & enable Gmail
+
+1. Go to <https://console.cloud.google.com/> and sign in with the Google account whose Gmail you want to read.
+2. Click the project dropdown at the top → **New project** → give it any name → **Create**.
+3. In the left sidebar choose **APIs & Services → Library**.
+4. Search for **Gmail API** → click it → **Enable**.
+
+#### 4b. Create OAuth 2.0 credentials
+
+1. Go to **APIs & Services → Credentials** → **+ Create Credentials → OAuth client ID**.
+2. If prompted to configure the consent screen, choose **External**, fill in an app name (anything), add your own email as a test user, and save.
+3. Back on the credentials screen, for **Application type** choose **Desktop app** → **Create**.
+4. Click **Download JSON** on the confirmation dialog (or the download icon next to your new credential). Rename the file to `credentials.json` and place it in the root of this project.
+
+> `credentials.json` is listed in `.gitignore` — it will **not** be committed.
+
+#### 4c. First-run auth
+
+The first time you run `python main.py` and ask about emails, a browser tab will open asking you to sign in and grant read-only access to your Gmail. After you approve, a `token.json` file is saved locally so you won't be asked again.
+
+> `token.json` is also in `.gitignore`.
+
+#### 4d. If you see a "Google hasn't verified this app" warning
+
+Click **Advanced → Go to \<your app name\> (unsafe)**. This is expected for apps in development/test mode — you are the only test user.
+
+---
+
+### 5. Run it
 
 ```bash
 python main.py
@@ -70,7 +103,7 @@ Type a message at the `You:` prompt. Press **Ctrl+C** to quit.
 
 **Try:**
 - `What is the current time?` — uses the plain `get_current_time` tool
-- `Summarize my unread emails` — delegates to the Gmail sub-agent
+- `Summarize my unread emails` — delegates to the Gmail sub-agent and reads your real inbox
 
 ---
 
@@ -81,5 +114,5 @@ Type a message at the `You:` prompt. Press **Ctrl+C** to quit.
 | `main.py` | CLI loop — reads input, prints output |
 | `master_agent.py` | Master Agent: routes to subworkflows or replies directly |
 | `gmail_workflow.py` | Gmail Agent: fetches and summarizes emails |
-| `tools.py` | Tools: `get_current_time()` and mock email data |
+| `tools.py` | Tools: `get_current_time()` and `get_unread_emails()` (real Gmail API, mock fallback) |
 | `llm.py` | `call_llm()` — the only file that touches the network |
