@@ -14,8 +14,7 @@ You (CLI Input)
         ├─▶ get_current_time()      -->  plain tool (returns the current time)
         └─▶ gmail_workflow          -->  subworkflow for email related tasks
               └─▶ Gmail Agent
-                    ├─▶ get_unread_emails()   fetches your real inbox via Gmail API
-                    └─▶ summarize_emails()    formats emails for the LLM
+                    └─▶ get_unread_emails()   fetches your real inbox via Gmail API
 ```
 
 The Master Agent's tools come in two flavors:

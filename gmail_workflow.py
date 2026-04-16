@@ -4,12 +4,11 @@
 
 import json
 from llm import call_llm
-from tools import get_unread_emails, summarize_emails
+from tools import get_unread_emails
 
 SYSTEM_PROMPT = (
     "You are a Gmail assistant. You help users manage their email. "
-    "Use the tools available to fetch and summarize emails. "
-    "Always use tools to gather information before responding."
+    "Use the get_unread_emails tool to fetch emails, then summarize them yourself in a clear, readable format."
 )
 
 # Tool schemas tell Claude what tools are available and how to call them.
@@ -23,33 +22,14 @@ GMAIL_TOOLS = [
             "required": [],
         },
     },
-    {
-        "name": "summarize_emails",
-        "description": "Summarize a list of emails into a readable plain-text format.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "emails": {
-                    "type": "array",
-                    "description": "The list of email objects to summarize.",
-                    "items": {"type": "object"},
-                }
-            },
-            "required": ["emails"],
-        },
-    },
 ]
 
 # Maps tool names to their actual Python functions.
 def call_get_unread_emails(inputs):
     return get_unread_emails()
 
-def call_summarize_emails(inputs):
-    return summarize_emails(inputs["emails"])
-
 TOOL_MAP = {
     "get_unread_emails": call_get_unread_emails,
-    "summarize_emails": call_summarize_emails,
 }
 
 

@@ -15,9 +15,7 @@ def get_current_time() -> str:
     return now.strftime("%A, %B %d, %Y at %I:%M %p")
 
 
-# ---------------------------------------------------------------------------
 # get_unread_emails  (real Gmail API)
-# ---------------------------------------------------------------------------
 
 # OAuth scopes — read-only is enough for this workshop.
 _SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
@@ -131,12 +129,3 @@ def _mock_emails() -> list[dict]:
         },
     ]
 
-
-# summarize_emails
-def summarize_emails(emails: list[dict]) -> str:
-    """Return a plain-text summary of a list of emails."""
-    print("[Tool] summarize_emails() called")
-    lines = []
-    for i, email in enumerate(emails, start=1):
-        lines.append(f"{i}. From {email['from']} — \"{email['subject']}\": {email['body']}")
-    return "\n".join(lines)
