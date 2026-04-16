@@ -71,7 +71,7 @@ def get_unread_emails(max_results: int = 10) -> list[dict]:
     print("[Tool] get_unread_emails() called")
 
     if not os.path.exists(_CREDS_PATH):
-        print("[Tool] credentials.json not found — returning mock data.")
+        print("[Tool] credentials.json not found — returning mock data. IF YOU ARE SEEING THIS, MAKE SURE YOU HAVE A credentials.json FILE IN THE SAME DIRECTORY AS THIS FILE.")
         return _mock_emails()
 
     try:
